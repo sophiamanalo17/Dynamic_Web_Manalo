@@ -12,6 +12,8 @@ div{
     align-items: flex-start;
 }
 
+
+/* h-stack properities*/
 #side{
     display: flex;
     flex-direction: row;
@@ -19,6 +21,7 @@ div{
     gap: 20px;
 }
 
+/* made a recipe 'card'*/
 #card{
     background-color: #f5f5f5;
     padding: 20px;
