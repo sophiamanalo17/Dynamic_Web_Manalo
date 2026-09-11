@@ -1,10 +1,5 @@
-import {RECIPE_DATA} from './recipe-data.js'
+import styles from './RecipeCard.module.css'
 
-const RecipeImg = (props) => {
-    //destructuring
-    const{ imgSrc, imgAlt } = props;
-    return (<img src={imgSrc} alt={imgAlt} />)
+export default function RecipeImg(props) {
+  return <img src={props.imgSrc} alt="buttermilk pancakes" className={styles.img} />
 }
-
-//props vome from parent component (RecipeCard.jsx) and is passed down to child component (RecipeImg.jsx) 
-export default RecipeImg
