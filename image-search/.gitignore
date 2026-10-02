@@ -23,6 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-#Never commit your api keys!
+# Never commit your API Keys!
 .env
 .env.local

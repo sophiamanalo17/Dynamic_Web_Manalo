@@ -1,17 +1,20 @@
-//receive data as prop here and map through them
+// receive data as a prop here and map through them
+import ImageItem from './ImageItem'
 
-import ImageItems from './ImageItems'
+const ImageList = (props) => {
+  const {images, term} = props
+  // console.log(images)
 
-const ImageList = (props) =>  {
-    const {images} = props
-    console.log(images)
+  const renderedImages = images.map((img) => (
+    <ImageItem image={img} key={img.id} />
+  ))
 
-
-    const renderedImages = images.map((img) => (
-        <ImageItems key={img.id} image={img} />
-    ))
-
-    return <div>{renderedImages}</div>
+  return (
+    <div>
+      {term && <h2>Search results for "{term}"</h2>}
+      {renderedImages}
+    </div>
+  )
 }
 
 export default ImageList

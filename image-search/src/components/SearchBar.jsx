@@ -1,31 +1,32 @@
 import {useState} from 'react'
- 
+
 const SearchBar = (props) => {
-    const [term, setTerm] = useState('')
-    const {onSubmit} = props
+  const {onSubmit} = props
+  const [term, setTerm] = useState('')
+  // updates the form value whenever the user types a character or space
+  const handleChange = (event) => {
+    // why wont this work?
+    setTerm(event.target.value)
+  }
 
-    const handleChange = (event) => {
-        setTerm(event.target.value)
-    }
-
-    const handleFormSubmit = (event) => {
-        //prevent default behavior which is to refresh page on form submit
-        //need 2 interrupt bc we dont want to lose js env. 
-        event.preventDefault()
-        //term from state
-        onSubmit(term)
-    }
-
+  // sends the search term up to the parent App
+  const handleFormSubmit = (event) => {
+    // prevent default behavior which is to refresh the page on form submit
+    // we need to interrupt this because we don't want to loose our JS
+    // environment and any values REact is storing
+    event.preventDefault()
+    onSubmit(term) // term is coming from state
+  }
   return (
-    <div className='p-4'>
-        <form onSubmit = {handleFormSubmit}>
-            <input
-                type='text'
-                value={term}
-                onChange={handleChange}
-                className='w-fit rounded-lg border-2 border-gray-300 bg-white px-3 py-2 text-gray-700 shadow-sm transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'
-            />
-        </form>
+    <div className="p-4">
+      <form onSubmit={handleFormSubmit}>
+        <input
+          type="text"
+          value={term}
+          onChange={handleChange}
+          className="border border-gray-300 rounded px-3 py-2 w-80"
+        />
+      </form>
     </div>
   )
 }
