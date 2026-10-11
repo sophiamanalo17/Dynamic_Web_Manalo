@@ -1,6 +1,18 @@
+// 1. In the body, the fetch runs on every render, and since the fetch itself causes
+// a render, it loops forever. In useEffect with [], it runs only once, when the component
+//  first appears. 
+
+//2. if you move settodo above the await you would probably see the item in the list disappear but because
+//setodo runs first the server never truly deleted the line item (it fake deletes)
+
+//3. my filter didn't need a request because the filter just fetches all items when the page first renders
+//so clicking buttons to filter doesnt change any data in the server only the todos/line items a person sees.
+//its not get, post, put, or deleting anything
+
 import {useState, useEffect} from 'react'
 import TodoCreate from './components/TodoCreate'
 import TodoList from './components/TodoList'
+import TodoFilter from './components/TodoFilter'
 import {
   fetchTodos,
   createTodo as createTodoRequest,
@@ -12,6 +24,9 @@ const App = () => {
   const [todos, setTodos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  // lives here, not in TodoFilter: the buttons AND the list both need it,
+  // and App is the closest parent they share
+  const [filter, setFilter] = useState('all')
 
   // [] = run once, when the component first appears. NOT every render --
   // that would fetch, set state, re-render, fetch again, forever.
@@ -65,6 +80,36 @@ const App = () => {
     setTodos(updatedTodos)
   }
 
+  const finishTodoById = async (id) => {
+    const todo = todos.find((todo) => todo.id === id)
+    // flip it: false -> true, true -> false (so you can "undo" a finish too)
+    const updated = await updateTodoRequest({...todo, done: !todo.done})
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return updated
+      }
+      return todo
+    })
+    setTodos(updatedTodos)
+  }
+
+  // no request here. We already have every todo, so this is just filter on
+  // data we are holding. Worked out fresh every render, never stored in state --
+  // a second copy of the todos would fall out of date the moment one changed.
+  const visibleTodos = todos.filter((todo) => {
+    if (filter === 'active') {
+      return !todo.done
+    }
+    if (filter === 'done') {
+      return todo.done
+    }
+    return true
+  })
+
+  // "to do" means not done yet. Counted from ALL todos, not visibleTodos, so
+  // the number stays the same whichever filter button is selected.
+  const activeCount = todos.filter((todo) => !todo.done).length
+
   return (
     <div className="max-w-xl mx-auto p-8">
       <h1 className="text-3xl font-bold mb-6">Todo List</h1>
@@ -78,11 +123,14 @@ const App = () => {
       {!isLoading && !error && todos.length === 0 ? (
         <p className="text-gray-500">Nothing yet. Add something above.</p>
       ) : (
-        <TodoList todos={todos} onDelete={deleteTodoById} onEdit={editTodoById} />
+        <>
+          <TodoFilter filter={filter} onChange={setFilter} />
+          <TodoList todos={visibleTodos} onDelete={deleteTodoById} onEdit={editTodoById} onFinish={finishTodoById} />
+        </>
       )}
 
       <p className="mt-6 text-sm text-gray-500">
-        {todos.length} {todos.length === 1 ? 'thing' : 'things'} to do
+        {activeCount} {activeCount === 1 ? 'thing' : 'things'} to do
       </p>
     </div>
   )
