@@ -1,7 +1,8 @@
 import {useState} from 'react'
+import { TrashAlt } from "griddy-icons";
 
 const TodoEdit = (props) => {
-  const {todo, onSubmit} = props
+  const {todo, onSubmit, onDelete} = props
   // start the input at the todo's CURRENT title, so editing means changing
   // what is there rather than retyping it
   const [title, setTitle] = useState(todo.title)
@@ -15,6 +16,11 @@ const TodoEdit = (props) => {
     onSubmit(todo.id, title)
   }
 
+  const handleDelete = () => {
+    onDelete(todo.id)
+  }
+
+
   return (
     <form onSubmit={handleSubmit} className="flex gap-2 py-3">
       <input
@@ -23,6 +29,9 @@ const TodoEdit = (props) => {
         onChange={handleChange}
         className="flex-1 border border-gray-300 rounded px-3 py-2"
       />
+      <button type="button" onClick={handleDelete} className="text-red-600">
+          <TrashAlt size={24}  />
+        </button>
       <button className="bg-blue-900 text-white px-4 py-2 rounded text-sm">
         Save
       </button>

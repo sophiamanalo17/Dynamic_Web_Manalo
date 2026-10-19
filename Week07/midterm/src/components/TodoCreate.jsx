@@ -13,7 +13,12 @@ const TodoCreate = (props) => {
 
   //added this input to allow user to enter total pages of the book!
   const handleTotalPagesChange = (event) => {
-    setTotalPages(event.target.value)
+    const value = event.target.value
+    // only digits allowed (or empty, so you can still backspace everything)
+    // if its a anything else except a number, then do not update the state and do not allow it to be typed in
+    if (/^\d*$/.test(value)) {
+      setTotalPages(value)
+    }
   }
 
 
@@ -27,7 +32,7 @@ const TodoCreate = (props) => {
 
   return (
     //need one handle submit once both inputs are filled out and then pass the values up to the parent component
-    <form onSubmit={handleSubmit} className="grid grid-cols-[minmax(0,4fr)_minmax(0,1fr)_auto] gap-2 mb-6">
+    <form onSubmit={handleSubmit} className="grid grid-cols-[minmax(0,3fr)_minmax(0,1fr)_auto] gap-2 mb-6">
       <input
         type="text"
         value={title}
@@ -36,10 +41,11 @@ const TodoCreate = (props) => {
         className="border border-gray-300 rounded-full px-3 py-2"
       />
       <input
-        type="number"
+        type="text"
+        inputMode="numeric"
         value={total_pages}
         onChange={handleTotalPagesChange}
-        placeholder="Total pages"
+        placeholder="Total pg #"
         className="border border-gray-300 rounded-full px-3 py-2"
       />
       <button className="bg-cyan-900 text-white px-5 py-2 rounded-full">Add</button>

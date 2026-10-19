@@ -35,6 +35,7 @@ You need **two terminal tabs**:
 1. Install packages (only the first time):
    ```
    npm install
+   npm install griddy-icons
    ```
 2. Tab 1 — start the server:
    ```

@@ -9,10 +9,6 @@ const TodoItem = (props) => {
   // nobody else's business -- App does not care, the other rows do not care.
   const [showEdit, setShowEdit] = useState(false)
 
-  const handleDelete = () => {
-    onDelete(book.id)
-  }
-
   const handleEditClick = () => {
     setShowEdit(!showEdit)
   }
@@ -28,7 +24,7 @@ const TodoItem = (props) => {
   }
 
   if (showEdit) {
-    return <TodoEdit todo={book} onSubmit={handleSubmit} />
+    return <TodoEdit todo={book} onSubmit={handleSubmit} onDelete={onDelete} />
   }
 
   return (
@@ -46,13 +42,11 @@ const TodoItem = (props) => {
           {book.title}
         </span>
       </label>
+      {/* documentation from https://react.dev/reference/react-dom/components/progress */}
+      <progress value={book.current_page} max={book.total_pages} />
       <div className="flex gap-3 text-sm">
-        {Math.round(book.current_page / book.total_pages * 100)}%
         <button onClick={handleEditClick} className="text-gray-700">
           <Edit size={24}  />
-        </button>
-        <button onClick={handleDelete} className="text-red-600">
-          <TrashAlt size={24}  />
         </button>
       </div>
     </div>
