@@ -112,9 +112,9 @@ const App = () => {
 
   return (
     <div className="max-w-xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Todo List</h1>
+      <h1 className="text-3xl font-bold mb-6">My Reading List</h1>
       <TodoCreate onCreate={createTodo} />
-      {isLoading && <p className="text-gray-500">Loading your todos...</p>}
+      {isLoading && <p className="text-gray-500">Loading your books...</p>}
 
       {error && (
         <p className="rounded bg-red-50 p-3 text-red-700">{error}</p>

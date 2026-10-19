@@ -2,13 +2,13 @@ import {useState} from 'react'
 import TodoEdit from './TodoEdit'
 
 const TodoItem = (props) => {
-  const {todo, onDelete, onEdit, onFinish} = props
+  const {book, onDelete, onEdit, onFinish} = props
   // THIS one belongs here. Whether this row is showing its edit form is
   // nobody else's business -- App does not care, the other rows do not care.
   const [showEdit, setShowEdit] = useState(false)
 
   const handleDelete = () => {
-    onDelete(todo.id)
+    onDelete(book.id)
   }
 
   const handleEditClick = () => {
@@ -16,7 +16,7 @@ const TodoItem = (props) => {
   }
 
   const handleFinish = () => {
-    onFinish(todo.id)
+    onFinish(book.id)
   }
 
   const handleSubmit = (id, newTitle) => {
@@ -26,7 +26,7 @@ const TodoItem = (props) => {
   }
 
   if (showEdit) {
-    return <TodoEdit todo={todo} onSubmit={handleSubmit} />
+    return <TodoEdit todo={book} onSubmit={handleSubmit} />
   }
 
   return (
@@ -36,12 +36,12 @@ const TodoItem = (props) => {
         {/* === true so a todo with no done field is still a plain false, not undefined */}
         <input
           type="checkbox"
-          checked={todo.done === true}
+          checked={book.finished === true}
           onChange={handleFinish}
         />
         {/* if todo is done strikethrough */}
-        <span className={todo.done ? 'text-gray-400 line-through' : ''}>
-          {todo.title}
+        <span className={book.finished ? 'text-gray-400 line-through' : ''}>
+          {book.title} — {Math.round(book.current_page / book.total_pages * 100)}%
         </span>
       </label>
       <div className="flex gap-3 text-sm">

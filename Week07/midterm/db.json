@@ -1,9 +1,39 @@
 {
-  "todos": [
+  "books": [
     {
-      "id": 1,
-      "title": "go grocery shopping",
-      "done": true
+      "title": "pride and prejudice",
+      "finished": false,
+      "current_page": 0,
+      "total_pages": 432,
+      "id": 1
+    },
+    {
+      "title": "pride and prejudice",
+      "finished": false,
+      "current_page": 0,
+      "total_pages": 432,
+      "id": 2
+    },
+    {
+      "title": "pride and prejudice",
+      "finished": false,
+      "current_page": 0,
+      "total_pages": 432,
+      "id": 3
+    },
+    {
+      "title": "",
+      "finished": false,
+      "current_page": 0,
+      "total_pages": 432,
+      "id": 4
+    },
+    {
+      "title": "to kill a mockingbird",
+      "finished": false,
+      "current_page": 0,
+      "total_pages": 432,
+      "id": 5
     }
   ]
 }

@@ -90,7 +90,7 @@ I decided to use tbd lolol!!!!!
 
 **Finished page**
 
-- [ ] list of all finished
+- [ ] list of all finished (based on finished state)
 
 ### After (what I actually had to do)
 - [ ] 
@@ -98,20 +98,6 @@ I decided to use tbd lolol!!!!!
 ### The Gap
 <!-- What did I forget? Compare the two lists. -->
 
-## Project Structure
-
-```
-src/
-  App.jsx              main component, holds the todos + filter state
-  api.js               all the requests to the server
-  components/
-    TodoCreate.jsx     form to add a todo
-    TodoList.jsx       renders the list
-    TodoItem.jsx       one todo row
-    TodoEdit.jsx       edit form for a todo
-    TodoFilter.jsx     filter buttons
-db.json                the "database" json-server reads/writes
-```
 
 ## Notes / Reflection
 

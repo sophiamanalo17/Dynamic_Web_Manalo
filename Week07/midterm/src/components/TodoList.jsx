@@ -5,7 +5,7 @@ const TodoList = (props) => {
 
   const renderedTodos = todos.map((todo) => {
     return (
-      <TodoItem key={todo.id} todo={todo} onDelete={onDelete} onEdit={onEdit} onFinish={onFinish} />
+      <TodoItem key={todo.id} book={todo} onDelete={onDelete} onEdit={onEdit} onFinish={onFinish} />
     )
   })
 
