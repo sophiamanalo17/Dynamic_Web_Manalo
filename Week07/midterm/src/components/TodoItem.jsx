@@ -1,5 +1,7 @@
 import {useState} from 'react'
 import TodoEdit from './TodoEdit'
+import { Edit, TrashAlt } from "griddy-icons";
+
 
 const TodoItem = (props) => {
   const {book, onDelete, onEdit, onFinish} = props
@@ -41,15 +43,16 @@ const TodoItem = (props) => {
         />
         {/* if todo is done strikethrough */}
         <span className={book.finished ? 'text-gray-400 line-through' : ''}>
-          {book.title} — {Math.round(book.current_page / book.total_pages * 100)}%
+          {book.title}
         </span>
       </label>
       <div className="flex gap-3 text-sm">
-        <button onClick={handleEditClick} className="text-blue-700">
-          edit
+        {Math.round(book.current_page / book.total_pages * 100)}%
+        <button onClick={handleEditClick} className="text-gray-700">
+          <Edit size={24}  />
         </button>
         <button onClick={handleDelete} className="text-red-600">
-          delete
+          <TrashAlt size={24}  />
         </button>
       </div>
     </div>

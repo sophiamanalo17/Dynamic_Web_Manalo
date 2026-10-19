@@ -1,1 +1,11 @@
 @import 'tailwindcss';
+
+@font-face {
+  font-family: 'MyFont';
+  src: url('./fonts/MyFont.ttf') format('truetype');
+  /* trutype is ttf */
+}
+
+@theme {
+  --font-sans: 'MyFont', sans-serif;
+}

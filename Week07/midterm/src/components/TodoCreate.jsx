@@ -11,6 +11,7 @@ const TodoCreate = (props) => {
     setTitle(event.target.value)
   }
 
+  //added this input to allow user to enter total pages of the book!
   const handleTotalPagesChange = (event) => {
     setTotalPages(event.target.value)
   }
@@ -25,22 +26,23 @@ const TodoCreate = (props) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
+    //need one handle submit once both inputs are filled out and then pass the values up to the parent component
+    <form onSubmit={handleSubmit} className="grid grid-cols-[minmax(0,4fr)_minmax(0,1fr)_auto] gap-2 mb-6">
       <input
         type="text"
         value={title}
         onChange={handleTitleChange}
         placeholder="What book are you reading?"
-        className="flex-1 border border-gray-300 rounded px-3 py-2"
+        className="border border-gray-300 rounded-full px-3 py-2"
       />
       <input
         type="number"
         value={total_pages}
         onChange={handleTotalPagesChange}
         placeholder="Total pages"
-        className="flex-1 border border-gray-300 rounded px-3 py-2"
+        className="border border-gray-300 rounded-full px-3 py-2"
       />
-      <button className="bg-blue-900 text-white px-5 py-2 rounded">Add</button>
+      <button className="bg-cyan-900 text-white px-5 py-2 rounded-full">Add</button>
     </form>
   )
 }
