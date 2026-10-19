@@ -90,9 +90,7 @@ I decided to use tbd lolol!!!!!
 
 **Finished page**
 
-- [ ] **Sort books**
-  - [ ] Sort by name
-  - [ ] Sort by most recently finished
+- [ ] list of all finished
 
 ### After (what I actually had to do)
 - [ ] 
