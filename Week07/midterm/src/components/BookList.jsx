@@ -1,4 +1,4 @@
-import TodoItem from './TodoItem'
+import TodoItem from './BookItem'
 
 const TodoList = (props) => {
   const {todos, onDelete, onEdit, onFinish} = props

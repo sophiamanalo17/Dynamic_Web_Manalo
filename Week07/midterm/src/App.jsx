@@ -9,9 +9,9 @@
 //put, get, post, delete arent being used, its simply changing what a viewer sees instead
 
 import {useState, useEffect} from 'react'
-import TodoCreate from './components/TodoCreate'
-import TodoList from './components/TodoList'
-import TodoFilter from './components/TodoFilter'
+import TodoCreate from './components/BookCreate'
+import TodoList from './components/BookList'
+import TodoFilter from './components/BookFilter'
 import {
   fetchTodos,
   createTodo as createTodoRequest,
@@ -94,7 +94,7 @@ const App = () => {
     const done = !todo.done
     // checking the box = finished the book, so jump to the last page.
     // unchecking leaves current_page alone so you don't lose your place
-    const current_page = done ? todo.total_pages : todo.current_page
+    const current_page = done ? todo.total_pages : 0
     const updated = await updateTodoRequest({...todo, done, current_page})
     const updatedTodos = todos.map((todo) => {
       if (todo.id === id) {

@@ -2,8 +2,8 @@
   "books": [
     {
       "title": "test01",
-      "done": true,
-      "current_page": 400,
+      "done": false,
+      "current_page": 50,
       "total_pages": 400,
       "id": 1
     },
