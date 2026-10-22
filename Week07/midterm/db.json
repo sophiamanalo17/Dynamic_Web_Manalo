@@ -1,10 +1,10 @@
 {
   "books": [
     {
-      "title": "pride and prejudice",
-      "done": true,
-      "current_page": 0,
-      "total_pages": 432,
+      "title": "test01",
+      "done": false,
+      "current_page": 20,
+      "total_pages": 100,
       "id": 1
     }
   ]

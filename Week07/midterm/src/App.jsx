@@ -45,9 +45,9 @@ const App = () => {
     loadTodos()
   }, [])
 
-  const createTodo = async (title) => {
+  const createTodo = async (title, current_page, total_pages) => {
     // the server makes the id now, so we no longer invent one
-    const newTodo = await createTodoRequest(title)
+    const newTodo = await createTodoRequest(title, current_page, total_pages)
     const updatedTodos = [...todos, newTodo]
     setTodos(updatedTodos)
   }
@@ -63,10 +63,16 @@ const App = () => {
     setTodos(updatedTodos)
   }
 
-  const editTodoById = async (id, newTitle) => {
+  const editTodoById = async (id, newTitle, newCurrentPage, newTotalPages) => {
     // find the whole todo and send all of it, because PUT replaces
     const todo = todos.find((todo) => todo.id === id)
-    const updated = await updateTodoRequest({...todo, title: newTitle})
+    // Number() because inputs hand us strings like "120"
+    const updated = await updateTodoRequest({
+      ...todo,
+      title: newTitle,
+      current_page: Number(newCurrentPage),
+      total_pages: Number(newTotalPages),
+    })
 
     // map returns a new array the SAME length. Every todo comes back; the one
     // we edited comes back as the object the SERVER sent us
@@ -111,7 +117,7 @@ const App = () => {
   const activeCount = todos.filter((todo) => !todo.done).length
 
   return (
-    <div className="max-w-xl mx-auto p-8">
+    <div className="max-w-3xl mx-auto p-8">
       <h1 className="text-3xl font-bold mb-6">My Reading List</h1>
       <TodoCreate onCreate={createTodo} />
       {isLoading && <p className="text-gray-500">Loading your books...</p>}

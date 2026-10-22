@@ -11,10 +11,16 @@ export const fetchTodos = async () => {
   return response.data
 }
 
-export const createTodo = async (title) => {
+export const createTodo = async (title, current_page, total_pages) => {
   // we send the title. The server sends back the whole todo, WITH an id.
   // every new todo starts out not done so the field is always there
-  const response = await axios.post(`${BASE}/books`, {title, done: false, current_page: 0, total_pages: 432})
+  // inputs give us strings like "432", so Number() turns them into real numbers
+  const response = await axios.post(`${BASE}/books`, {
+    title,
+    done: false,
+    current_page: Number(current_page),
+    total_pages: Number(total_pages),
+  })
   return response.data
 }
 
