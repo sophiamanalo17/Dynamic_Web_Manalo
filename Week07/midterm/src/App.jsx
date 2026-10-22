@@ -72,6 +72,8 @@ const App = () => {
       title: newTitle,
       current_page: Number(newCurrentPage),
       total_pages: Number(newTotalPages),
+      // reached the last page = finished
+      done: Number(newCurrentPage) >= Number(newTotalPages),
     })
 
     // map returns a new array the SAME length. Every todo comes back; the one
@@ -89,7 +91,11 @@ const App = () => {
   const finishTodoById = async (id) => {
     const todo = todos.find((todo) => todo.id === id)
     // flip it: false -> true, true -> false (so you can "undo" a finish too)
-    const updated = await updateTodoRequest({...todo, done: !todo.done})
+    const done = !todo.done
+    // checking the box = finished the book, so jump to the last page.
+    // unchecking leaves current_page alone so you don't lose your place
+    const current_page = done ? todo.total_pages : todo.current_page
+    const updated = await updateTodoRequest({...todo, done, current_page})
     const updatedTodos = todos.map((todo) => {
       if (todo.id === id) {
         return updated
@@ -136,7 +142,7 @@ const App = () => {
       )}
 
       <p className="mt-6 text-sm text-gray-500">
-        {activeCount} {activeCount === 1 ? 'thing' : 'things'} to do
+        {activeCount} {activeCount === 1 ? 'book' : 'books'} to read
       </p>
     </div>
   )

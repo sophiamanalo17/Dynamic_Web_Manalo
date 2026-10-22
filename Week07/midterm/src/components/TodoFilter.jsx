@@ -14,7 +14,7 @@ const TodoFilter = (props) => {
         key={name}
         onClick={() => onChange(name)}
         //is the toggle selected true? if yes then make it blue and if not use a unselected state
-        className={isSelected ? 'bg-blue-900 text-white px-3 py-1 rounded': 'border border-gray-300 px-3 py-1 rounded'}
+        className={isSelected ? 'bg-blue-900 text-white px-3 py-1 rounded-full': 'border border-gray-300 px-3 py-1 rounded-full'}
       >
         {name}
       </button>

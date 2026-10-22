@@ -14,6 +14,9 @@ const TodoItem = (props) => {
   }
 
   const handleFinish = () => {
+    // NOTE: don't change book.done here -- book is a prop. onFinish is App's
+    // finishTodoById, which flips done, saves it to the server, and calls setTodos
+    // so the checkbox and strikethrough update.
     onFinish(book.id)
   }
 
@@ -34,11 +37,11 @@ const TodoItem = (props) => {
         {/* === true so a todo with no done field is still a plain false, not undefined */}
         <input
           type="checkbox"
-          checked={book.finished === true}
+          checked={book.done === true}
           onChange={handleFinish}
         />
         {/* if todo is done strikethrough */}
-        <span className={book.finished ? 'text-gray-400 line-through' : ''}>
+        <span className={book.done ? 'text-gray-400 line-through' : ''}>
           {book.title}
         </span>
       </label>

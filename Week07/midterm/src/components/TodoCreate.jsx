@@ -32,6 +32,10 @@ const TodoCreate = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    // can't have read more pages than the book has, so don't add it
+    if (Number(current_page) > Number(total_pages)) {
+      return
+    }
     onCreate(title, current_page, total_pages)
     // clear the box. This is only possible BECAUSE the input is controlled.
     setTitle('')

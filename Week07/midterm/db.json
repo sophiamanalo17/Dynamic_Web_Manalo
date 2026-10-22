@@ -2,10 +2,24 @@
   "books": [
     {
       "title": "test01",
-      "done": false,
-      "current_page": 20,
-      "total_pages": 100,
+      "done": true,
+      "current_page": 400,
+      "total_pages": 400,
       "id": 1
+    },
+    {
+      "title": "test02",
+      "done": true,
+      "current_page": 134,
+      "total_pages": 134,
+      "id": 2
+    },
+    {
+      "title": "test 03",
+      "done": true,
+      "current_page": 34,
+      "total_pages": 34,
+      "id": 3
     }
   ]
 }

@@ -23,6 +23,15 @@ const TodoEdit = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    //if user inputs number grater than total pages, then the book is done
+    // NOTE: we can't just do book.done = true here. book is a prop, so changing it
+    // doesn't save to the server or make React re-render. Instead we cap the page
+    // at the total and send it up -- App sees current_page >= total_pages and
+    // saves the book as done.
+    if (Number(currentPage) > Number(totalPages)) {
+      onSubmit(book.id, title, totalPages, totalPages)
+      return
+    }
     onSubmit(book.id, title, currentPage, totalPages)
   }
 
@@ -64,3 +73,4 @@ const TodoEdit = (props) => {
 }
 
 export default TodoEdit
+  
