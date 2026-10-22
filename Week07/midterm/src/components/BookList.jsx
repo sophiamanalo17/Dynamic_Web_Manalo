@@ -1,15 +1,20 @@
-import TodoItem from './BookItem'
+import BookItem from './BookItem'
 
-const TodoList = (props) => {
-  const {todos, onDelete, onEdit, onFinish} = props
+const BookList = (props) => {
+  const {books, onDelete, onEdit, onFinish} = props
 
-  const renderedTodos = todos.map((todo) => {
+  const renderedBooks = books.map((book) => {
     return (
-      <TodoItem key={todo.id} book={todo} onDelete={onDelete} onEdit={onEdit} onFinish={onFinish} />
+      <BookItem key={book.id} book={book} onDelete={onDelete} onEdit={onEdit} onFinish={onFinish} />
     )
   })
 
-  return <div>{renderedTodos}</div>
+  return (
+    <div>
+      <h1>My Books</h1>
+      {renderedBooks}
+    </div>
+  )
 }
 
-export default TodoList
+export default BookList

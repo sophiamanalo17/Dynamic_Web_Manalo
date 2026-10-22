@@ -48,7 +48,17 @@ const TodoItem = (props) => {
       {/* documentation from https://react.dev/reference/react-dom/components/progress */}
       {/* relative = the box the text gets positioned inside */}
       <div className="relative w-40 h-5">
-        <progress value={book.current_page} max={book.total_pages} className="w-full h-full bg-gray-200" />
+        {/* appearance-none turns off the browser's built-in bar so our colors show.
+            track (empty part) = gray-300, same as the input borders
+            fill = gray-400, a bit darker so you can see progress */}
+        <progress
+          value={book.current_page}
+          max={book.total_pages}
+          className="w-full h-full appearance-none rounded-full overflow-hidden bg-gray-300
+            [&::-webkit-progress-bar]:bg-gray-300
+            [&::-webkit-progress-value]:bg-gray-400
+            [&::-moz-progress-bar]:bg-gray-400"
+        />
         {/* absolute inset-0 = stretch the text over the whole bar, then center it */}
         <span className="absolute inset-0 flex items-center justify-center text-xs">
           {book.current_page}/{book.total_pages}

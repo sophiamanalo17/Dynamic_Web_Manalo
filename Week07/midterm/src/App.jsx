@@ -11,7 +11,7 @@
 import {useState, useEffect} from 'react'
 import TodoCreate from './components/BookCreate'
 import TodoList from './components/BookList'
-import TodoFilter from './components/BookFilter'
+import FinishedList from './components/FinishedList'
 import {
   fetchTodos,
   createTodo as createTodoRequest,
@@ -23,9 +23,6 @@ const App = () => {
   const [todos, setTodos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
-  // lives here, not in TodoFilter: the buttons AND the list both need it,
-  // and App is the closest parent they share
-  const [filter, setFilter] = useState('all')
 
   // [] = run once, when the component first appears. NOT every render --
   // that would fetch, set state, re-render, fetch again, forever.
@@ -66,14 +63,17 @@ const App = () => {
   const editTodoById = async (id, newTitle, newCurrentPage, newTotalPages) => {
     // find the whole todo and send all of it, because PUT replaces
     const todo = todos.find((todo) => todo.id === id)
+    // reached the last page = finished
+    const done = Number(newCurrentPage) >= Number(newTotalPages)
     // Number() because inputs hand us strings like "120"
     const updated = await updateTodoRequest({
       ...todo,
       title: newTitle,
       current_page: Number(newCurrentPage),
       total_pages: Number(newTotalPages),
-      // reached the last page = finished
-      done: Number(newCurrentPage) >= Number(newTotalPages),
+      done,
+      // stamp today's date when the book gets finished
+      finished_date: done ? new Date().toISOString() : null,
     })
 
     // map returns a new array the SAME length. Every todo comes back; the one
@@ -95,7 +95,9 @@ const App = () => {
     // checking the box = finished the book, so jump to the last page.
     // unchecking leaves current_page alone so you don't lose your place
     const current_page = done ? todo.total_pages : 0
-    const updated = await updateTodoRequest({...todo, done, current_page})
+    // stamp today's date when the box gets checked, clear it if unchecked
+    const finished_date = done ? new Date().toISOString() : null
+    const updated = await updateTodoRequest({...todo, done, current_page, finished_date})
     const updatedTodos = todos.map((todo) => {
       if (todo.id === id) {
         return updated
@@ -108,19 +110,11 @@ const App = () => {
   // no request here. We already have every todo, so this is just filter on
   // data we are holding. Worked out fresh every render, never stored in state --
   // a second copy of the todos would fall out of date the moment one changed.
-  const visibleTodos = todos.filter((todo) => {
-    if (filter === 'active') {
-      return !todo.done
-    }
-    if (filter === 'done') {
-      return todo.done
-    }
-    return true
-  })
+  // split into two lists: still reading (editable) and finished (read-only)
+  const readingBooks = todos.filter((todo) => !todo.done)
+  const finishedBooks = todos.filter((todo) => todo.done)
 
-  // "to do" means not done yet. Counted from ALL todos, not visibleTodos, so
-  // the number stays the same whichever filter button is selected.
-  const activeCount = todos.filter((todo) => !todo.done).length
+  const activeCount = readingBooks.length
 
   return (
     <div className="max-w-3xl mx-auto p-8">
@@ -136,8 +130,8 @@ const App = () => {
         <p className="text-gray-500">Nothing yet. Add something above.</p>
       ) : (
         <>
-          <TodoFilter filter={filter} onChange={setFilter} />
-          <TodoList todos={visibleTodos} onDelete={deleteTodoById} onEdit={editTodoById} onFinish={finishTodoById} />
+          <TodoList books={readingBooks} onDelete={deleteTodoById} onEdit={editTodoById} onFinish={finishTodoById} />
+          {finishedBooks.length > 0 && <FinishedList books={finishedBooks} />}
         </>
       )}
 

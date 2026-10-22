@@ -2,10 +2,11 @@
   "books": [
     {
       "title": "test01",
-      "done": false,
-      "current_page": 50,
+      "done": true,
+      "current_page": 400,
       "total_pages": 400,
-      "id": 1
+      "id": 1,
+      "finished_date": "2026-10-22T16:36:08.596Z"
     },
     {
       "title": "test02",
@@ -20,6 +21,14 @@
       "current_page": 34,
       "total_pages": 34,
       "id": 3
+    },
+    {
+      "title": "pride and prejudice",
+      "done": true,
+      "current_page": 30,
+      "total_pages": 30,
+      "id": 4,
+      "finished_date": "2026-10-22T16:50:59.371Z"
     }
   ]
 }

@@ -1,11 +1,85 @@
 @import 'tailwindcss';
 
+/* trutype is ttf */
+/* otf files use format('opentype') */
+/* one @font-face per file. They all share the name 'Kyoto' -- font-weight and
+   font-style tell the browser which file to use for bold, light, italic, etc. */
 @font-face {
-  font-family: 'MyFont';
-  src: url('./fonts/MyFont.ttf') format('truetype');
-  /* trutype is ttf */
+  font-family: 'Kyoto';
+  src: url('./fonts/otf/PPKyoto-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Kyoto';
+  src: url('./fonts/otf/PPKyoto-ThinItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Kyoto';
+  src: url('./fonts/otf/PPKyoto-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Kyoto';
+  src: url('./fonts/otf/PPKyoto-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Kyoto';
+  src: url('./fonts/otf/PPKyoto-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Kyoto';
+  src: url('./fonts/otf/PPKyoto-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Kyoto';
+  src: url('./fonts/otf/PPKyoto-Extrabold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Kyoto';
+  src: url('./fonts/otf/PPKyoto-ExtraboldItalic.otf') format('opentype');
+  font-weight: 800;
+  font-style: italic;
 }
 
 @theme {
-  --font-sans: 'MyFont', sans-serif;
+  --font-sans: 'Kyoto', sans-serif;
+
+  /* swap Tailwind's cool grays for warm browns. Every gray class in the app
+     (border-gray-300, text-gray-500, bg-gray-200...) now uses these instead */
+  --color-gray-50: #faf6ef;
+  --color-gray-100: #f2eadb;
+  --color-gray-200: #e6d9c2;
+  --color-gray-300: #d6c3a3;
+  --color-gray-400: #b39b78;
+  --color-gray-500: #8c7456;
+  --color-gray-600: #6e5940;
+  --color-gray-700: #54432f;
+  --color-gray-800: #3b2f21;
+  --color-gray-900: #2c210e;
+  --color-gray-950: #1a140c;
+}
+
+/* make Light (300) the default weight for all text.
+   font-bold, font-medium, etc. still override it where you use them */
+@layer base {
+  body {
+    font-weight: 300;
+    /* warm off-white, like a book page */
+    background-color: #f5efe3;
+    /* dark warm brown text instead of black (moved here from @font-face,
+       where color doesn't work) */
+    color: #2c210e;
+  }
 }
