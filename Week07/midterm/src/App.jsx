@@ -9,8 +9,9 @@
 //put, get, post, delete arent being used, its simply changing what a viewer sees instead
 
 import {useState, useEffect} from 'react'
-import TodoCreate from './components/BookCreate'
-import TodoList from './components/BookList'
+import BookCreate from './components/BookCreate'
+import CreateModal from './components/CreateModal'
+import BookList from './components/BookList'
 import FinishedList from './components/FinishedList'
 import {
   fetchTodos,
@@ -23,6 +24,8 @@ const App = () => {
   const [todos, setTodos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  // is the "add a book" pop-up open? starts closed
+  const [showCreate, setShowCreate] = useState(false)
 
   // [] = run once, when the component first appears. NOT every render --
   // that would fetch, set state, re-render, fetch again, forever.
@@ -42,11 +45,13 @@ const App = () => {
     loadTodos()
   }, [])
 
-  const createTodo = async (title, current_page, total_pages) => {
+  const createTodo = async (title, current_page, total_page, author) => {
     // the server makes the id now, so we no longer invent one
-    const newTodo = await createTodoRequest(title, current_page, total_pages)
+    const newTodo = await createTodoRequest(title, current_page, total_page, author)
     const updatedTodos = [...todos, newTodo]
     setTodos(updatedTodos)
+    // book is saved, so close the pop-up
+    setShowCreate(false)
   }
 
   const deleteTodoById = async (id) => {
@@ -60,7 +65,7 @@ const App = () => {
     setTodos(updatedTodos)
   }
 
-  const editTodoById = async (id, newTitle, newCurrentPage, newTotalPages) => {
+  const editTodoById = async (id, newTitle, newCurrentPage, newTotalPages, author) => {
     // find the whole todo and send all of it, because PUT replaces
     const todo = todos.find((todo) => todo.id === id)
     // reached the last page = finished
@@ -118,8 +123,22 @@ const App = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">My Reading List</h1>
-      <TodoCreate onCreate={createTodo} />
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold">My Reading List</h1>
+        <button
+          onClick={() => setShowCreate(true)}
+          className="bg-cyan-900 text-white px-5 py-2 rounded-full"
+        >
+          + Add book
+        </button>
+      </div>
+
+      {/* only show the pop-up when showCreate is true */}
+      {showCreate && (
+        <CreateModal title="Add a book" onClose={() => setShowCreate(false)}>
+          <BookCreate onCreate={createTodo} />
+        </CreateModal>
+      )}
       {isLoading && <p className="text-gray-500">Loading your books...</p>}
 
       {error && (
@@ -127,17 +146,13 @@ const App = () => {
       )}
 
       {!isLoading && !error && todos.length === 0 ? (
-        <p className="text-gray-500">Nothing yet. Add something above.</p>
+        <p className="text-gray-500">Nothing yet. Click + Add book to start.</p>
       ) : (
         <>
-          <TodoList books={readingBooks} onDelete={deleteTodoById} onEdit={editTodoById} onFinish={finishTodoById} />
+          <BookList books={readingBooks} onDelete={deleteTodoById} onEdit={editTodoById} onFinish={finishTodoById} />
           {finishedBooks.length > 0 && <FinishedList books={finishedBooks} />}
         </>
       )}
-
-      <p className="mt-6 text-sm text-gray-500">
-        {activeCount} {activeCount === 1 ? 'book' : 'books'} to read
-      </p>
     </div>
   )
 }

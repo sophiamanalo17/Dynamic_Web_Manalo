@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { TrashAlt } from "griddy-icons";
 
-const TodoEdit = (props) => {
+const BookEdit = (props) => {
   const {book, onSubmit, onDelete} = props
   // start the input at the todo's CURRENT title, so editing means changing
   // what is there rather than retyping it
@@ -72,5 +72,5 @@ const TodoEdit = (props) => {
   )
 }
 
-export default TodoEdit
+export default BookEdit
   

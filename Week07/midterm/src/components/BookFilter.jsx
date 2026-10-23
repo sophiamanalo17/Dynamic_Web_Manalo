@@ -1,6 +1,6 @@
 const FILTERS = ['all', 'active', 'done']
 
-const TodoFilter = (props) => {
+const BookFilter = (props) => {
   // this component does NOT own the filter. App does, because the list needs
   // to know it too. We just show the buttons and report clicks back up.
   const {filter, onChange} = props
@@ -24,4 +24,4 @@ const TodoFilter = (props) => {
   return <div className="flex gap-2 mb-4 text-sm">{renderedButtons}</div>
 }
 
-export default TodoFilter
+export default BookFilter

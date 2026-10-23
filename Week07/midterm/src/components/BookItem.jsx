@@ -1,9 +1,9 @@
 import {useState} from 'react'
-import TodoEdit from './BookEdit'
+import BookEdit from './BookEdit'
 import { Edit } from "griddy-icons";
 
 
-const TodoItem = (props) => {
+const BookItem = (props) => {
   const {book, onDelete, onEdit, onFinish} = props
   // THIS one belongs here. Whether this row is showing its edit form is
   // nobody else's business -- App does not care, the other rows do not care.
@@ -27,7 +27,7 @@ const TodoItem = (props) => {
   }
 
   if (showEdit) {
-    return <TodoEdit book={book}onSubmit={handleSubmit} onDelete={onDelete} />
+    return <BookEdit book={book}onSubmit={handleSubmit} onDelete={onDelete} />
   }
 
   return (
@@ -41,10 +41,17 @@ const TodoItem = (props) => {
           onChange={handleFinish}
         />
         {/* if todo is done strikethrough */}
-        <span className={book.done ? 'text-gray-400 line-through' : ''}>
-          {book.title}
-        </span>
+        {/* title on top, author underneath */}
+        <div className="flex flex-col">
+          <span className={book.done ? 'text-gray-400 line-through' : ''}>
+            {book.title}
+          </span>
+          {book.author && <span className="text-sm italic text-gray-500">by {book.author}</span>}
+        </div>
       </label>
+
+      {/* grouped the edit & prog bar together */}
+      <div className="flex items-center gap-3">
       {/* documentation from https://react.dev/reference/react-dom/components/progress */}
       {/* relative = the box the text gets positioned inside */}
       <div className="relative w-40 h-5">
@@ -59,6 +66,7 @@ const TodoItem = (props) => {
             [&::-webkit-progress-value]:bg-gray-400
             [&::-moz-progress-bar]:bg-gray-400"
         />
+        
         {/* absolute inset-0 = stretch the text over the whole bar, then center it */}
         <span className="absolute inset-0 flex items-center justify-center text-xs">
           {book.current_page}/{book.total_pages}
@@ -69,8 +77,9 @@ const TodoItem = (props) => {
           <Edit size={24}  />
         </button>
       </div>
+      </div>
     </div>
   )
 }
 
-export default TodoItem
+export default BookItem
