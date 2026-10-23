@@ -41,6 +41,8 @@ const BookCreate = (props) => {
     if (Number(current_page) > Number(total_pages)) {
       return
     }
+
+    
     onCreate(title, current_page, total_pages, author)
     // clear the box. This is only possible BECAUSE the input is controlled.
     setTitle('')

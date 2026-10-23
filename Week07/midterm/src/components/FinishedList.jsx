@@ -1,4 +1,5 @@
 import { CheckCircle } from "griddy-icons";
+import EmptyState from './EmptyState'
 
 
 // read-only list: no checkbox, no edit, no delete -- finished books just show
@@ -39,9 +40,7 @@ const FinishedList = (props) => {
         <h2 className="text-xl font-bold mb-2">Finished</h2>
       </div>
         {books.length === 0 && (
-          <div className="flex px-4 py-6 bg-gray-100 rounded-lg mb-4 mt-4">
-            <p className="text-gray-500">Nothing yet. Add something above.</p>
-          </div>
+          <EmptyState message="No finished books yet. Keep reading!" />
         )}
       {renderedBooks}
       {/* outside the .map() so it shows once, under the whole list */}

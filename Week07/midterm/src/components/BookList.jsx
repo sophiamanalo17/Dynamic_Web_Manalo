@@ -1,4 +1,5 @@
 import BookItem from './BookItem'
+import EmptyState from './EmptyState'
 import { Book } from "griddy-icons"
 
 const BookList = (props) => {
@@ -19,9 +20,7 @@ const BookList = (props) => {
         <h1 className="text-xl font-bold">My Books</h1>
       </div>
         {books.length === 0 && (
-          <div className="flex px-4 py-6 bg-gray-100 rounded-lg mb-4 mt-4">
-            <p className="text-gray-500">Nothing yet. Add something above.</p>
-          </div>
+          <EmptyState message="No books in progress. Click + Add book to start one." />
         )}
       {renderedBooks}
 

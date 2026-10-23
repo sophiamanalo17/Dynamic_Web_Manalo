@@ -13,6 +13,8 @@ import BookCreate from './components/BookCreate'
 import CreateModal from './components/CreateModal'
 import BookList from './components/BookList'
 import FinishedList from './components/FinishedList'
+import BookFilter from './components/BookFilter'
+import EmptyState from './components/EmptyState'
 import {
   fetchTodos,
   createTodo as createTodoRequest,
@@ -26,6 +28,9 @@ const App = () => {
   const [error, setError] = useState(null)
   // is the "add a book" pop-up open? starts closed
   const [showCreate, setShowCreate] = useState(false)
+  // which lists to show: 'all', 'current', or 'finished'. Lives here because
+  // the filter buttons AND the lists both need to know it
+  const [filter, setFilter] = useState('all')
 
   // [] = run once, when the component first appears. NOT every render --
   // that would fetch, set state, re-render, fetch again, forever.
@@ -146,11 +151,28 @@ const App = () => {
       )}
 
       {!isLoading && !error && todos.length === 0 ? (
-        <p className="text-gray-500">Nothing yet. Click + Add book to start.</p>
+        <EmptyState message="Nothing yet. Click + Add book to start." />
       ) : (
         <>
-          <BookList books={readingBooks} onDelete={deleteTodoById} onEdit={editTodoById} onFinish={finishTodoById} />
-          {finishedBooks.length > 0 && <FinishedList books={finishedBooks} />}
+          <BookFilter
+            filter={filter}
+            onChange={setFilter}
+            // one number per button. The keys match the button names exactly
+            counts={{
+              all: todos.length,
+              current: readingBooks.length,
+              finished: finishedBooks.length,
+            }}
+          />
+          {/* current list shows on "all" or "current" */}
+          {filter !== 'finished' && (
+            <BookList books={readingBooks} onDelete={deleteTodoById} onEdit={editTodoById} onFinish={finishTodoById} />
+          )}
+          {/* finished list shows on "finished" (even if empty, so you see the
+              "nothing yet" message), or on "all" when there's at least one */}
+          {(filter === 'finished' || (filter === 'all' && finishedBooks.length > 0)) && (
+            <FinishedList books={finishedBooks} />
+          )}
         </>
       )}
     </div>
