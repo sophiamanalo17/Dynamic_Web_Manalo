@@ -20,8 +20,9 @@ const BookItem = (props) => {
     onFinish(book.id)
   }
 
-  const handleSubmit = (id, newTitle, newCurrentPage, newTotalPages) => {
-    onEdit(id, newTitle, newCurrentPage, newTotalPages)
+  const handleSubmit = async (id, newTitle, newCurrentPage, newTotalPages, newAuthor) => {
+    // await = only close if the save worked
+    await onEdit(id, newTitle, newCurrentPage, newTotalPages, newAuthor)
     // close the form once the edit has gone up
     setShowEdit(false)
   }

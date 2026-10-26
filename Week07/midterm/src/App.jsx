@@ -79,6 +79,7 @@ const App = () => {
     const updated = await updateTodoRequest({
       ...todo,
       title: newTitle,
+      author,
       current_page: Number(newCurrentPage),
       total_pages: Number(newTotalPages),
       done,
