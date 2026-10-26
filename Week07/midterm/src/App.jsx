@@ -3,7 +3,7 @@
 //  first appears. 
 
 //2. if you move it above the await you would probably see the item in the list disappear but because
-//setodo runs first the server never truly deleted the line item (it fake deletes)
+//setBooks runs first the server never truly deleted the line item (it fake deletes)
 
 //3. it doesnt use a request because no information is being changed or updated on the server end
 //put, get, post, delete arent being used, its simply changing what a viewer sees instead
@@ -16,14 +16,14 @@ import FinishedList from './components/FinishedList'
 import BookFilter from './components/BookFilter'
 import EmptyState from './components/EmptyState'
 import {
-  fetchTodos,
-  createTodo as createTodoRequest,
-  deleteTodo as deleteTodoRequest,
-  updateTodo as updateTodoRequest,
+  fetchBooks,
+  createBook as createBookRequest,
+  deleteBook as deleteBookRequest,
+  updateBook as updateBookRequest,
 } from './api'
 
 const App = () => {
-  const [todos, setTodos] = useState([])
+  const [books, setBooks] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   // is the "add a book" pop-up open? starts closed
@@ -35,10 +35,10 @@ const App = () => {
   // [] = run once, when the component first appears. NOT every render --
   // that would fetch, set state, re-render, fetch again, forever.
   useEffect(() => {
-    const loadTodos = async () => {
+    const loadBooks = async () => {
       try {
-        const todos = await fetchTodos()
-        setTodos(todos)
+        const books = await fetchBooks()
+        setBooks(books)
       } catch (err) {
         // the usual cause: you forgot to start the server in the second tab
         console.error(err)
@@ -47,37 +47,37 @@ const App = () => {
         setIsLoading(false)
       }
     }
-    loadTodos()
+    loadBooks()
   }, [])
 
-  const createTodo = async (title, current_page, total_page, author) => {
+  const createBook = async (title, current_page, total_page, author) => {
     // the server makes the id now, so we no longer invent one
-    const newTodo = await createTodoRequest(title, current_page, total_page, author)
-    const updatedTodos = [...todos, newTodo]
-    setTodos(updatedTodos)
+    const newBook = await createBookRequest(title, current_page, total_page, author)
+    const updatedBooks = [...books, newBook]
+    setBooks(updatedBooks)
     // book is saved, so close the pop-up
     setShowCreate(false)
   }
 
-  const deleteTodoById = async (id) => {
+  const deleteBookById = async (id) => {
     // ask the server first. If it refuses, we never touch our state, and the
     // screen keeps telling the truth.
-    await deleteTodoRequest(id)
+    await deleteBookRequest(id)
 
-    const updatedTodos = todos.filter((todo) => {
-      return todo.id !== id
+    const updatedBooks = books.filter((book) => {
+      return book.id !== id
     })
-    setTodos(updatedTodos)
+    setBooks(updatedBooks)
   }
 
-  const editTodoById = async (id, newTitle, newCurrentPage, newTotalPages, author) => {
-    // find the whole todo and send all of it, because PUT replaces
-    const todo = todos.find((todo) => todo.id === id)
+  const editBookById = async (id, newTitle, newCurrentPage, newTotalPages, author) => {
+    // find the whole book and send all of it, because PUT replaces
+    const book = books.find((book) => book.id === id)
     // reached the last page = finished
     const done = Number(newCurrentPage) >= Number(newTotalPages)
     // Number() because inputs hand us strings like "120"
-    const updated = await updateTodoRequest({
-      ...todo,
+    const updated = await updateBookRequest({
+      ...book,
       title: newTitle,
       author,
       current_page: Number(newCurrentPage),
@@ -87,45 +87,43 @@ const App = () => {
       finished_date: done ? new Date().toISOString() : null,
     })
 
-    // map returns a new array the SAME length. Every todo comes back; the one
+    // map returns a new array the SAME length. Every book comes back; the one
     // we edited comes back as the object the SERVER sent us
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
+    const updatedBooks = books.map((book) => {
+      if (book.id === id) {
         return updated
       }
-      return todo
+      return book
     })
-    setTodos(updatedTodos)
+    setBooks(updatedBooks)
   }
 
   //similar pattern to edit but changing the done status
-  const finishTodoById = async (id) => {
-    const todo = todos.find((todo) => todo.id === id)
+  const finishBookById = async (id) => {
+    const book = books.find((book) => book.id === id)
     // flip it: false -> true, true -> false (so you can "undo" a finish too)
-    const done = !todo.done
+    const done = !book.done
     // checking the box = finished the book, so jump to the last page.
     // unchecking leaves current_page alone so you don't lose your place
-    const current_page = done ? todo.total_pages : 0
+    const current_page = done ? book.total_pages : 0
     // stamp today's date when the box gets checked, clear it if unchecked
     const finished_date = done ? new Date().toISOString() : null
-    const updated = await updateTodoRequest({...todo, done, current_page, finished_date})
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
+    const updated = await updateBookRequest({...book, done, current_page, finished_date})
+    const updatedBooks = books.map((book) => {
+      if (book.id === id) {
         return updated
       }
-      return todo
+      return book
     })
-    setTodos(updatedTodos)
+    setBooks(updatedBooks)
   }
 
-  // no request here. We already have every todo, so this is just filter on
+  // no request here. We already have every book, so this is just filter on
   // data we are holding. Worked out fresh every render, never stored in state --
-  // a second copy of the todos would fall out of date the moment one changed.
+  // a second copy of the books would fall out of date the moment one changed.
   // split into two lists: still reading (editable) and finished (read-only)
-  const readingBooks = todos.filter((todo) => !todo.done)
-  const finishedBooks = todos.filter((todo) => todo.done)
-
-  const activeCount = readingBooks.length
+  const readingBooks = books.filter((book) => !book.done)
+  const finishedBooks = books.filter((book) => book.done)
 
   return (
     <div className="max-w-3xl mx-auto p-8">
@@ -142,7 +140,7 @@ const App = () => {
       {/* only show the pop-up when showCreate is true */}
       {showCreate && (
         <CreateModal title="Add a book" onClose={() => setShowCreate(false)}>
-          <BookCreate onCreate={createTodo} />
+          <BookCreate onCreate={createBook} />
         </CreateModal>
       )}
       {isLoading && <p className="text-gray-500">Loading your books...</p>}
@@ -151,7 +149,7 @@ const App = () => {
         <p className="rounded bg-red-50 p-3 text-red-700">{error}</p>
       )}
 
-      {!isLoading && !error && todos.length === 0 ? (
+      {!isLoading && !error && books.length === 0 ? (
         <EmptyState message="Nothing yet. Click + Add book to start." />
       ) : (
         <>
@@ -160,14 +158,14 @@ const App = () => {
             onChange={setFilter}
             // one number per button. The keys match the button names exactly
             counts={{
-              all: todos.length,
+              all: books.length,
               current: readingBooks.length,
               finished: finishedBooks.length,
             }}
           />
           {/* current list shows on "all" or "current" */}
           {filter !== 'finished' && (
-            <BookList books={readingBooks} onDelete={deleteTodoById} onEdit={editTodoById} onFinish={finishTodoById} />
+            <BookList books={readingBooks} onDelete={deleteBookById} onEdit={editBookById} onFinish={finishBookById} />
           )}
           {/* finished list shows on "finished" (even if empty, so you see the
               "nothing yet" message), or on "all" when there's at least one */}

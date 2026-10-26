@@ -48,7 +48,7 @@ You need **two terminal tabs**:
 4. Open the link!!
 
 ## Props vs. Context
-I decided to use tbd lolol!!!!!
+I decided to props because in all honesty, I would get confused when we would prop drill and certain components had different nanes for the same thing. For example, the edit function changes names when it gets passed down to its children. In App.jsx its EditBookById, but when BookList.jsx gets the function its onEdit. 
 
 ## Developer Checklist
 
@@ -94,14 +94,22 @@ I decided to use tbd lolol!!!!!
 - [ ] list of all finished (based on finished state)
 
 ### After (what I actually had to do)
-- [ ] 
+- [ ] create piece of state to track if create modal would be showing
+- [ ] create error states of all the forms 
+- [ ] condense useStates into one object for all inputs --> create new component for form field
+- [ ] style everything to look more book-like
+- [ ] add a progress bar that used current_page and total_pages
+- [ ] change all original names of components
 
 ### The Gap
 <!-- What did I forget? Compare the two lists. -->
-
+- [ ] class on 
 
 ## Notes / Reflection
 
 <!-- What did you learn? What was hard? What would you do next? -->
-need to write!!!!!!
+Something I learned was establishing a set plan before starting to code. I think I began the project with a loose idea of what I wanted to do requirement wise. I think I should have thought more about how I wanted the UI to look like because in the middle, I wanted to add a modal to the app, but had to restructure everything. 
 
+Something else that was hard was breaking down the components to its children. For example after Thursday's class where we could be use controlled inputs and validation, I implemented this into my project, but the components became so long so I broke ut ip into the actual create modal, to form, to even the input. In a sense, thinking about thses things atomically was something I had to adapt to both technically, but also mentally. 
+
+If I had time to do more, something I would want to try doing is make a disabled/active state for buttons, maybe find a public api that had the book cover or titles and then maybe forms could auto-fill. Additioanlly, something I would want to do next is to create a way to sort finished books by title (a-z) or date finished. 

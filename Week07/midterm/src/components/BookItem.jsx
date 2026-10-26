@@ -15,7 +15,7 @@ const BookItem = (props) => {
 
   const handleFinish = () => {
     // NOTE: don't change book.done here -- book is a prop. onFinish is App's
-    // finishTodoById, which flips done, saves it to the server, and calls setTodos
+    // finishBookById, which flips done, saves it to the server, and calls setBooks
     // so the checkbox and strikethrough update.
     onFinish(book.id)
   }
@@ -34,14 +34,14 @@ const BookItem = (props) => {
   return (
     <div className="flex items-center justify-between border-b border-gray-200 py-3">
       <label className="flex items-center gap-3">
-        {/* if todo finished is done then undo (and also crossout) but if not then display finish */}
-        {/* === true so a todo with no done field is still a plain false, not undefined */}
+        {/* if book finished is done then undo (and also crossout) but if not then display finish */}
+        {/* === true so a book with no done field is still a plain false, not undefined */}
         <input
           type="checkbox"
           checked={book.done === true}
           onChange={handleFinish}
         />
-        {/* if todo is done strikethrough */}
+        {/* if book is done strikethrough */}
         {/* title on top, author underneath */}
         <div className="flex flex-col">
           <span className={book.done ? 'text-gray-400 line-through' : ''}>

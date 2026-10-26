@@ -1,10 +1,11 @@
 import {useState} from 'react'
 import { TrashAlt } from "griddy-icons";
 import {validateBook} from '../validateBook'
+import Input from './Input'
 
 const BookEdit = (props) => {
   const {book, onSubmit, onDelete} = props
-  // start the input at the todo's CURRENT title, so editing means changing
+  // start the input at the book's CURRENT title, so editing means changing
   // what is there rather than retyping it
   // String() so pages act like typed text, same as the add form
   const [values, setValues] = useState({
@@ -86,86 +87,48 @@ const BookEdit = (props) => {
     onDelete(book.id)
   }
 
-  const fieldClass = (field) => {
-    const base = 'border rounded-full px-3 py-2'
-    return showError(field)
-      ? `${base} border-red-500 bg-red-50`
-      : `${base} border-gray-300`
-  }
-
   // same layout as the add form
   return (
     <form onSubmit={handleSubmit} noValidate className="py-3 grid grid-cols-1 sm:grid-cols-[minmax(0,3fr)_minmax(0,1fr)_minmax(0,1fr)] gap-2 mb-6 items-start">
-      <div className="flex flex-col gap-1 text-sm">
-        <label htmlFor={idFor('title')}>Title</label>
-        <input
-          id={idFor('title')}
-          name="title"
-          type="text"
-          value={values.title}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          aria-invalid={showError('title') ? true : undefined}
-          aria-describedby={showError('title') ? idFor('title-error') : undefined}
-          className={fieldClass('title')}
-        />
-        {showError('title') && (
-          <p id={idFor('title-error')} className="text-red-700">{errors.title}</p>
-        )}
-      </div>
-      <div className="flex flex-col gap-1 text-sm">
-        <label htmlFor={idFor('current_page')}>Current page</label>
-        <input
-          id={idFor('current_page')}
-          name="current_page"
-          type="text"
-          inputMode="numeric"
-          value={values.current_page}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          aria-invalid={showError('current_page') ? true : undefined}
-          aria-describedby={showError('current_page') ? idFor('current_page-error') : undefined}
-          className={fieldClass('current_page')}
-        />
-        {showError('current_page') && (
-          <p id={idFor('current_page-error')} className="text-red-700">{errors.current_page}</p>
-        )}
-      </div>
-      <div className="flex flex-col gap-1 text-sm">
-        <label htmlFor={idFor('total_pages')}>Total pages</label>
-        <input
-          id={idFor('total_pages')}
-          name="total_pages"
-          type="text"
-          inputMode="numeric"
-          value={values.total_pages}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          aria-invalid={showError('total_pages') ? true : undefined}
-          aria-describedby={showError('total_pages') ? idFor('total_pages-error') : undefined}
-          className={fieldClass('total_pages')}
-        />
-        {showError('total_pages') && (
-          <p id={idFor('total_pages-error')} className="text-red-700">{errors.total_pages}</p>
-        )}
-      </div>
-      <div className="sm:col-span-3 flex flex-col gap-1 text-sm">
-        <label htmlFor={idFor('author')}>Author</label>
-        <input
-          id={idFor('author')}
-          name="author"
-          type="text"
-          value={values.author}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          aria-invalid={showError('author') ? true : undefined}
-          aria-describedby={showError('author') ? idFor('author-error') : undefined}
-          className={fieldClass('author')}
-        />
-        {showError('author') && (
-          <p id={idFor('author-error')} className="text-red-700">{errors.author}</p>
-        )}
-      </div>
+      <Input
+        id={idFor('title')}
+        name="title"
+        label="Title"
+        value={values.title}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        error={showError('title')}
+      />
+      <Input
+        id={idFor('current_page')}
+        name="current_page"
+        label="Current page"
+        inputMode="numeric"
+        value={values.current_page}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        error={showError('current_page')}
+      />
+      <Input
+        id={idFor('total_pages')}
+        name="total_pages"
+        label="Total pages"
+        inputMode="numeric"
+        value={values.total_pages}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        error={showError('total_pages')}
+      />
+      <Input
+        id={idFor('author')}
+        name="author"
+        label="Author"
+        value={values.author}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        error={showError('author')}
+        className="sm:col-span-3"
+      />
       {submitError && (
         <p className="sm:col-span-3 rounded bg-red-50 p-3 text-sm text-red-700">{submitError}</p>
       )}

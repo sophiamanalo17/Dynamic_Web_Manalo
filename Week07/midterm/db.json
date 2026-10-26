@@ -1,5 +1,30 @@
 {
   "books": [
-
+    {
+      "title": "ways of seeing",
+      "author": "John Berger",
+      "done": false,
+      "current_page": 46,
+      "total_pages": 166,
+      "id": 1
+    },
+    {
+      "title": "Castle Gripsholm",
+      "author": "Kurt Tucholsky",
+      "done": false,
+      "current_page": 41,
+      "total_pages": 127,
+      "id": 2,
+      "finished_date": null
+    },
+    {
+      "title": "Abigail",
+      "author": "Magda Szabo",
+      "done": true,
+      "current_page": 100,
+      "total_pages": 100,
+      "id": 3,
+      "finished_date": "2026-10-26T02:22:56.228Z"
+    }
   ]
 }

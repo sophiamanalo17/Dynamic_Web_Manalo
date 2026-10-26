@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import {validateBook} from '../validateBook'
+import Input from './Input'
 
 // blank form
 const EMPTY = {
@@ -88,14 +89,6 @@ const BookCreate = (props) => {
     }
   }
 
-  // red when there's an error, gray when not
-  const fieldClass = (field) => {
-    const base = 'border rounded-full px-3 py-2 text-base'
-    return showError(field)
-      ? `${base} border-red-500 bg-red-50`
-      : `${base} border-gray-300`
-  }
-
   return (
     //need one handle submit once both inputs are filled out and then pass the values up to the parent component
     // 3 columns: title gets 3 parts, the two page boxes get 1 part each
@@ -104,92 +97,59 @@ const BookCreate = (props) => {
     <form onSubmit={handleSubmit} noValidate className="grid grid-cols-1 sm:grid-cols-[minmax(0,3fr)_minmax(0,1fr)_minmax(0,1fr)] gap-3 items-start">
       {/* wrapping the input in a <label> ties the words to the box --
           clicking "Title" puts the cursor in the title input */}
-      <div className="flex flex-col gap-1 text-sm">
-        {/* the label text + star are wrapped in one <span>. The label is flex-col,
-            so without the wrapper the star would drop onto its own line */}
-        {/* htmlFor + id tie them now */}
-        <label htmlFor="title">
-          <span>Title <span className="text-red-600">*</span></span>
-        </label>
-        <input
-          id="title"
-          name="title"
-          type="text"
-          value={values.title}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder="What book are you reading?"
-          aria-invalid={showError('title') ? true : undefined}
-          aria-describedby={showError('title') ? 'title-error' : undefined}
-          className={fieldClass('title')}
-        />
-        {showError('title') && (
-          <p id="title-error" className="text-red-700">{errors.title}</p>
-        )}
-      </div>
-      <div className="flex flex-col gap-1 text-sm">
-        <label htmlFor="current_page">
-          <span>Current page <span className="text-red-600">*</span></span>
-        </label>
-        <input
-          id="current_page"
-          name="current_page"
-          type="text"
-          inputMode="numeric"
-          value={values.current_page}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder="0"
-          aria-invalid={showError('current_page') ? true : undefined}
-          aria-describedby={showError('current_page') ? 'current_page-error' : undefined}
-          className={fieldClass('current_page')}
-        />
-        {showError('current_page') && (
-          <p id="current_page-error" className="text-red-700">{errors.current_page}</p>
-        )}
-      </div>
-      <div className="flex flex-col gap-1 text-sm">
-        <label htmlFor="total_pages">
-          <span>Total pages <span className="text-red-600">*</span></span>
-        </label>
-        <input
-          id="total_pages"
-          name="total_pages"
-          type="text"
-          inputMode="numeric"
-          value={values.total_pages}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder="432"
-          aria-invalid={showError('total_pages') ? true : undefined}
-          aria-describedby={showError('total_pages') ? 'total_pages-error' : undefined}
-          className={fieldClass('total_pages')}
-        />
-        {showError('total_pages') && (
-          <p id="total_pages-error" className="text-red-700">{errors.total_pages}</p>
-        )}
-      </div>
+      {/* label, box, and error message all live in Input.jsx now */}
+      <Input
+        id="title"
+        name="title"
+        label="Title"
+        required
+        value={values.title}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="What book are you reading?"
+        error={showError('title')}
+        inputClassName="text-base"
+      />
+      <Input
+        id="current_page"
+        name="current_page"
+        label="Current page"
+        required
+        inputMode="numeric"
+        value={values.current_page}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="0"
+        error={showError('current_page')}
+        inputClassName="text-base"
+      />
+      <Input
+        id="total_pages"
+        name="total_pages"
+        label="Total pages"
+        required
+        inputMode="numeric"
+        value={values.total_pages}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="432"
+        error={showError('total_pages')}
+        inputClassName="text-base"
+      />
       {/* col-span-3 = stretch across all 3 columns, so author gets its own line */}
-      <div className="sm:col-span-3 flex flex-col gap-1 text-sm">
-        <label htmlFor="author">
-          <span>Author <span className="text-red-600">*</span></span>
-        </label>
-        <input
-          id="author"
-          name="author"
-          type="text"
-          value={values.author}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder="Who wrote it?"
-          aria-invalid={showError('author') ? true : undefined}
-          aria-describedby={showError('author') ? 'author-error' : undefined}
-          className={fieldClass('author')}
-        />
-        {showError('author') && (
-          <p id="author-error" className="text-red-700">{errors.author}</p>
-        )}
-      </div>
+      <Input
+        id="author"
+        name="author"
+        label="Author"
+        required
+        value={values.author}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Who wrote it?"
+        error={showError('author')}
+        className="sm:col-span-3"
+        inputClassName="text-base"
+      />
       {submitError && (
         <p className="sm:col-span-3 rounded bg-red-50 p-3 text-sm text-red-700">{submitError}</p>
       )}
