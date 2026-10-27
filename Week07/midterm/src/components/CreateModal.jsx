@@ -3,6 +3,7 @@
 const CreateModal = (props) => {
   const {title, onClose, children} = props
 
+  //something to note: book info not prop drilled here bc it js displays based on onClosed(which is false if showing). 
   return (
     // fixed inset-0 = cover the whole screen. bg-black/40 = 40% see-through dark layer
     // clicking this dark backdrop closes the modal

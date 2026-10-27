@@ -1,13 +1,3 @@
-// 1. In the body, the fetch runs on every render, and since the fetch itself causes
-// a render, it loops forever. In useEffect with [], it runs only once, when the component
-//  first appears. 
-
-//2. if you move it above the await you would probably see the item in the list disappear but because
-//setBooks runs first the server never truly deleted the line item (it fake deletes)
-
-//3. it doesnt use a request because no information is being changed or updated on the server end
-//put, get, post, delete arent being used, its simply changing what a viewer sees instead
-
 import {useState, useEffect} from 'react'
 import BookCreate from './components/BookCreate'
 import CreateModal from './components/CreateModal'
@@ -50,6 +40,9 @@ const App = () => {
     loadBooks()
   }, [])
 
+    //----------------------------------
+
+  //create book runs to send user input info to server
   const createBook = async (title, current_page, total_page, author) => {
     // the server makes the id now, so we no longer invent one
     const newBook = await createBookRequest(title, current_page, total_page, author)
@@ -117,6 +110,8 @@ const App = () => {
     })
     setBooks(updatedBooks)
   }
+
+  //----------------------------------
 
   // no request here. We already have every book, so this is just filter on
   // data we are holding. Worked out fresh every render, never stored in state --

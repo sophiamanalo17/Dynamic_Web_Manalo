@@ -101,9 +101,10 @@ I decided to props because in all honesty, I would get confused when we would pr
 - [ ] add a progress bar that used current_page and total_pages
 - [ ] change all original names of components
 
+
 ### The Gap
 <!-- What did I forget? Compare the two lists. -->
-- [ ] class on 
+- Something that I didn't necessarily write in my list was how I would make values 'undefined' when thats not the same as '' or just 0 or false. Another thing I forgot was to make sure all my forms had error messages that someone could read to understand what went wrong. On that note, I also had to come up with edge cases of like if a user inputs X current page and X total of pages for a book for onCreate, then it should automatically go to the finished list. I think just coming up with edge cases for when the 'happy path' isn't taken is something I didn't think about until the end.
 
 ## Notes / Reflection
 

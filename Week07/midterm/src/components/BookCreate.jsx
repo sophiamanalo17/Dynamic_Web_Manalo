@@ -10,6 +10,7 @@ const EMPTY = {
   total_pages: '',
 }
 
+//another piece that works to tell users errors if certain condition (other than blur happens)
 const validate = (values) => {
   const errors = validateBook(values)
   // can't have read more pages than the book has, so don't add it
