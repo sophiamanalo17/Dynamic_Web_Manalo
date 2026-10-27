@@ -29,7 +29,7 @@ As someone who has bought a lot of books but hasn't read them yet, I want to tra
 - json-server (fake REST API that saves to `db.json`)
 
 ## How to Run
-
+icons from https://griddyicons.com/
 You need **two terminal tabs**:
 
 1. Install packages (only the first time):
@@ -104,7 +104,7 @@ I decided to props because in all honesty, I would get confused when we would pr
 
 ### The Gap
 <!-- What did I forget? Compare the two lists. -->
-- Something that I didn't necessarily write in my list was how I would make values 'undefined' when thats not the same as '' or just 0 or false. Another thing I forgot was to make sure all my forms had error messages that someone could read to understand what went wrong. On that note, I also had to come up with edge cases of like if a user inputs X current page and X total of pages for a book for onCreate, then it should automatically go to the finished list. I think just coming up with edge cases for when the 'happy path' isn't taken is something I didn't think about until the end.
+- Something that I didn't necessarily write in my list was how I would make values 'undefined' when thats not the same as '' or just 0 or false. Another thing I forgot was to make sure all my forms had error messages that someone could read to understand what went wrong. On that note, I also had to come up with edge cases of like if a user inputs X current page and X total of pages for a book for onCreate, then it should automatically go to the finished list. I think just coming up with edge cases for when the 'happy path' isn't taken is something I didn't think about until the end. 
 
 ## Notes / Reflection
 
