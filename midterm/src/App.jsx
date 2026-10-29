@@ -96,9 +96,7 @@ const App = () => {
     const book = books.find((book) => book.id === id)
     // flip it: false -> true, true -> false (so you can "undo" a finish too)
     const done = !book.done
-    // checking the box = finished the book, so jump to the last page.
-    // unchecking leaves current_page alone so you don't lose your place
-    const current_page = done ? book.total_pages : 0
+    // checking the box = finished the book, so jump to the last page.    const current_page = done ? book.total_pages : 0
     // stamp today's date when the box gets checked, clear it if unchecked
     const finished_date = done ? new Date().toISOString() : null
     const updated = await updateBookRequest({...book, done, current_page, finished_date})

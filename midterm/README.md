@@ -14,6 +14,9 @@ As someone who has bought a lot of books but hasn't read them yet, I want to tra
 
 **Goal:** let people track their reading progress on current books and keep a history of the books they've finished.
 
+## Link to Presentation
+https://www.figma.com/proto/XowQLJ5sdfzAu6UISWn6Qr/dymanic-web-midterm?node-id=1-2&viewport=45%2C367%2C0.07&t=IlxK3395bsis2gnV-1&scaling=contain&content-scaling=fixed&page-id=0%3A1
+
 ## Features
 
 - Add, edit, and delete todos

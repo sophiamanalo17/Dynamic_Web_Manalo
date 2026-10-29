@@ -6,7 +6,8 @@
       "done": false,
       "current_page": 46,
       "total_pages": 166,
-      "id": 1
+      "id": 1,
+      "finished_date": null
     },
     {
       "title": "Castle Gripsholm",
@@ -34,6 +35,33 @@
       "total_pages": 157,
       "id": 4,
       "finished_date": "2026-10-27T00:55:09.645Z"
+    },
+    {
+      "title": "hi",
+      "author": "test",
+      "done": true,
+      "current_page": 20,
+      "total_pages": 20,
+      "finished_date": "2026-10-27T01:16:42.384Z",
+      "id": 5
+    },
+    {
+      "title": "we",
+      "author": "be",
+      "done": true,
+      "current_page": 2,
+      "total_pages": 2,
+      "finished_date": "2026-10-27T11:25:36.343Z",
+      "id": 6
+    },
+    {
+      "title": "author",
+      "author": "me",
+      "done": true,
+      "current_page": 100,
+      "total_pages": 100,
+      "finished_date": "2026-10-27T12:47:42.128Z",
+      "id": 7
     }
   ]
 }

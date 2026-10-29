@@ -13,9 +13,7 @@ export const fetchBooks = async () => {
 
 export const createBook= async (title, current_page, total_pages, author) => {
   // we send the title. The server sends back the whole book, WITH an id.
-  // every new book starts out not done so the field is always there
   // inputs give us strings like "432", so Number() turns them into real numbers
-  // ...unless you add it already on the last page -- same check as editing
   const done = Number(current_page) >= Number(total_pages)
   const response = await axios.post(`${BASE}/books`, {
     title,
@@ -24,7 +22,8 @@ export const createBook= async (title, current_page, total_pages, author) => {
     current_page: Number(current_page),
     total_pages: Number(total_pages),
     // stamp today's date so the finished list has one to show
-    finished_date: done ? new Date().toISOString() : null,
+    //MM-DD-YYYY
+    finished_date: done ? new Date() : null,
   })
   return response.data
 }
